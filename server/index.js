@@ -9,8 +9,13 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(bodyParser.json());
 
-let subscriptions = [];
+// Required for ES modules to get __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+
+// Serve static frontend files from client/dist
+app.use(express.static(path.join(__dirname, '../client/dist')));
 app.post('/subscribe', (req, res) => {
   const subscription = req.body;
   subscriptions.push(subscription);
