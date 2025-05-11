@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
+
 const { sendNotification, vapidKeys } = require('./webpush');
 
 const app = express();
@@ -10,8 +12,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Required for ES modules to get __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 
 // Serve static frontend files from client/dist
