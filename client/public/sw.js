@@ -1,7 +1,9 @@
 self.addEventListener('push', event => {
-  const data = event.data.json();
-  self.registration.showNotification(data.title, {
-    body: data.body,
+    console.log('[Service Worker] Push received:', event);
+
+  // const data = event.data.json();
+  self.registration.showNotification("hi", {
+    body: "new like",
     icon: '/pwa-192x192.png',
   });
 });

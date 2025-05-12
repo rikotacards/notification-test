@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 const { sendNotification, vapidKeys } = require('./webpush');
 const subscriptions = [];
@@ -15,7 +14,6 @@ app.use(bodyParser.json());
 
 
 // Serve static frontend files from client/dist
-app.use(express.static(path.join(__dirname, '../client/dist')));
 app.post('/subscribe', (req, res) => {
   const subscription = req.body;
   subscriptions.push(subscription);
@@ -29,6 +27,7 @@ app.post('/like', async (req, res) => {
   });
 
   for (let sub of subscriptions) {
+    console.log('sub', payload)
     await sendNotification(sub, payload);
   }
 

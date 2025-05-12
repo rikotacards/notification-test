@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+const test = 'http://localhost:3001'
 const domain = 'https://notification-test-production.up.railway.app'
+
 function App() {
   const subscribeToPush = async () => {
     const registration = await navigator.serviceWorker.ready;
@@ -17,6 +19,27 @@ function App() {
     });
   };
 
+  const unsubscribeFromPush = async () => {
+  try {
+    const registration = await navigator.serviceWorker.ready;
+
+    // Get the current subscription
+    const subscription = await registration.pushManager.getSubscription();
+
+    if (subscription) {
+      // Unsubscribe if a subscription exists
+      await subscription.unsubscribe();
+      console.log('Successfully unsubscribed from push notifications.');
+
+     
+    } else {
+      console.log('No active subscription to unsubscribe from.');
+    }
+  } catch (err) {
+    console.error('Error during push unsubscription:', err);
+  }
+};
+
   const handleLike = async () => {
     await fetch(`${domain}/like`, { method: 'POST' });
   };
@@ -32,6 +55,7 @@ function App() {
       <h1>PWA Push Demo</h1>
       <button onClick={subscribeToPush}>Enable Notifications</button>
       <button onClick={handleLike}>Like</button>
+      <button onClick={unsubscribeFromPush}>unsub</button>
     </div>
   );
 }
