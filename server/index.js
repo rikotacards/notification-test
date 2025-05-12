@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const { sendNotification, vapidKeys } = require('./webpush');
-
+const subscriptions = [];
 const app = express();
 const port = process.env.PORT || 3001;
 

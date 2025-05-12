@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
-
+const domain = 'https://notification-test-production.up.railway.app'
 function App() {
   const subscribeToPush = async () => {
     const registration = await navigator.serviceWorker.ready;
-    const publicKey = await fetch('http://localhost:3001/vapid-public-key').then(res => res.text());
+    const publicKey = await fetch(`${domain}/vapid-public-key`).then(res => res.text());
 
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(publicKey)
     });
 
-    await fetch('http://localhost:3001/subscribe', {
+    await fetch(`${domain}/subscribe`, {
       method: 'POST',
       body: JSON.stringify(subscription),
       headers: { 'Content-Type': 'application/json' }
@@ -18,7 +18,7 @@ function App() {
   };
 
   const handleLike = async () => {
-    await fetch('http://localhost:3001/like', { method: 'POST' });
+    await fetch(`${domain}/like`, { method: 'POST' });
   };
 
   useEffect(() => {
